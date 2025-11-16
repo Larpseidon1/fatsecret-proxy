@@ -177,12 +177,15 @@ app.get('/test', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 FatSecret Proxy Server running on port ${PORT}`);
+const HOST = '0.0.0.0'; // Listen on all interfaces for Railway
+
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 FatSecret Proxy Server running on ${HOST}:${PORT}`);
   console.log(`📡 Endpoints:`);
   console.log(`   GET /api/search?q=<query>`);
   console.log(`   GET /api/food/:foodId`);
   console.log(`   GET /health`);
+  console.log(`   GET /test`);
   console.log(`🔑 Environment check:`);
   console.log(`   CLIENT_ID configured: ${!!FATSECRET_CLIENT_ID} (length: ${FATSECRET_CLIENT_ID?.length || 0})`);
   console.log(`   CLIENT_SECRET configured: ${!!FATSECRET_CLIENT_SECRET} (length: ${FATSECRET_CLIENT_SECRET?.length || 0})`);
