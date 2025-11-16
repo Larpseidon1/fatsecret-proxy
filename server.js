@@ -5,6 +5,12 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  console.log('📥 GET /');
+  res.status(200).send('Hello from FatSecret Proxy!');
+  res.end();
+});
+
 const FATSECRET_CLIENT_ID = process.env.FATSECRET_CLIENT_ID;
 const FATSECRET_CLIENT_SECRET = process.env.FATSECRET_CLIENT_SECRET;
 const FATSECRET_AUTH_URL = 'https://oauth.fatsecret.com/connect/token';
