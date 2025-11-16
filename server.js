@@ -162,7 +162,14 @@ app.get('/health', (req, res) => {
     }
   };
   console.log('📤 Sending health response:', JSON.stringify(response));
-  res.json(response);
+  
+  // Explicitly set headers for Railway
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200);
+  res.send(JSON.stringify(response));
+  res.end();
+  
+  console.log('✅ Response sent and closed');
 });
 
 // Test FatSecret connection
