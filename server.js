@@ -159,5 +159,8 @@ app.listen(PORT, () => {
   console.log(`   GET /api/search?q=<query>`);
   console.log(`   GET /api/food/:foodId`);
   console.log(`   GET /health`);
+  console.log(`🔑 Environment check:`);
+  console.log(`   CLIENT_ID configured: ${!!FATSECRET_CLIENT_ID} (length: ${FATSECRET_CLIENT_ID?.length || 0})`);
+  console.log(`   CLIENT_SECRET configured: ${!!FATSECRET_CLIENT_SECRET} (length: ${FATSECRET_CLIENT_SECRET?.length || 0})`);
 });
 
