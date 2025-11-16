@@ -148,8 +148,32 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     hasToken: !!accessToken,
-    tokenExpired: tokenExpiry ? Date.now() >= tokenExpiry : null
+    tokenExpired: tokenExpiry ? Date.now() >= tokenExpiry : null,
+    envConfigured: {
+      clientId: !!FATSECRET_CLIENT_ID,
+      clientSecret: !!FATSECRET_CLIENT_SECRET
+    }
   });
+});
+
+// Test FatSecret connection
+app.get('/test', async (req, res) => {
+  try {
+    console.log('🧪 Testing FatSecret connection...');
+    const token = await authenticate();
+    res.json({ 
+      status: 'success', 
+      message: 'FatSecret authentication successful',
+      tokenLength: token.length
+    });
+  } catch (error) {
+    console.error('❌ Test failed:', error);
+    res.status(500).json({ 
+      status: 'error', 
+      message: error.message,
+      stack: error.stack
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
