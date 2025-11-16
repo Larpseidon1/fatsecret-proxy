@@ -14,6 +14,12 @@ const FATSECRET_API_URL = 'https://platform.fatsecret.com/rest/server.api';
 let accessToken = null;
 let tokenExpiry = null;
 
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`📥 ${req.method} ${req.path}`);
+  next();
+});
+
 // CORS middleware (allow your iOS app)
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -144,7 +150,8 @@ app.get('/api/food/:foodId', async (req, res) => {
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ 
+  console.log('✅ Health check requested');
+  const response = { 
     status: 'ok', 
     timestamp: new Date().toISOString(),
     hasToken: !!accessToken,
@@ -153,7 +160,9 @@ app.get('/health', (req, res) => {
       clientId: !!FATSECRET_CLIENT_ID,
       clientSecret: !!FATSECRET_CLIENT_SECRET
     }
-  });
+  };
+  console.log('📤 Sending health response:', JSON.stringify(response));
+  res.json(response);
 });
 
 // Test FatSecret connection
